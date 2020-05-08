@@ -1,0 +1,479 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "apilogin.v1alpha1.test",
+    "version": "v0.0.0",
+    "contact": {
+      "name": "gRPC Kit",
+      "url": "https://grpc-kit.com"
+    },
+    "license": {
+      "name": "Apache License 2.0"
+    }
+  },
+  "host": "apilogin.v1alpha1.test.api.grpc-kit.com",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/baseauth": {
+      "get": {
+        "summary": "HTTP Base AUTH",
+        "description": "curl --user hello:world http://127.0.0.1:10080/baseauth",
+        "operationId": "BaseAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1BaseAuthResponse"
+            }
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "demo"
+        ]
+      }
+    },
+    "/demo": {
+      "get": {
+        "summary": "示例RESTful/RPC接口",
+        "description": "这里做一些较长的使用描述\n 1. POST 用于创建资源，非幂等\n 2. GET 用于获取资源，幂等\n 3. PUT 用于更新资源，幂等\n 4. DELETE 用于删除资源，幂等",
+        "operationId": "Demo2",
+        "responses": {
+          "200": {
+            "description": "Content 多个资源响应内容（无分页属性）",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/v1ExampleResponse"
+              }
+            }
+          },
+          "204": {
+            "description": "no content",
+            "schema": {}
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUID 资源编号.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ping.name",
+            "description": "Name 该字段的备注，这里把它设置为必填属性.",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ping.value",
+            "description": "Value 该字段的备注，这里设置它默认值为3.14.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "float",
+            "default": "3.14"
+          }
+        ],
+        "tags": [
+          "demo"
+        ]
+      },
+      "post": {
+        "summary": "示例RESTful/RPC接口",
+        "description": "这里做一些较长的使用描述\n 1. POST 用于创建资源，非幂等\n 2. GET 用于获取资源，幂等\n 3. PUT 用于更新资源，幂等\n 4. DELETE 用于删除资源，幂等",
+        "operationId": "Demo",
+        "responses": {
+          "200": {
+            "description": "Pong 放回创建的资源",
+            "schema": {
+              "$ref": "#/definitions/DemoResponsePong"
+            }
+          },
+          "204": {
+            "description": "no content",
+            "schema": {}
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1alpha1DemoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "demo"
+        ]
+      }
+    },
+    "/demo/{uuid}": {
+      "get": {
+        "summary": "示例RESTful/RPC接口",
+        "description": "这里做一些较长的使用描述\n 1. POST 用于创建资源，非幂等\n 2. GET 用于获取资源，幂等\n 3. PUT 用于更新资源，幂等\n 4. DELETE 用于删除资源，幂等",
+        "operationId": "Demo3",
+        "responses": {
+          "200": {
+            "description": "Pong 单个资源响应内容",
+            "schema": {
+              "$ref": "#/definitions/v1ExampleResponse"
+            }
+          },
+          "204": {
+            "description": "no content",
+            "schema": {}
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUID 资源编号",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ping.name",
+            "description": "Name 该字段的备注，这里把它设置为必填属性.",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ping.value",
+            "description": "Value 该字段的备注，这里设置它默认值为3.14.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "float",
+            "default": "3.14"
+          }
+        ],
+        "tags": [
+          "demo"
+        ]
+      },
+      "delete": {
+        "summary": "示例RESTful/RPC接口",
+        "description": "这里做一些较长的使用描述\n 1. POST 用于创建资源，非幂等\n 2. GET 用于获取资源，幂等\n 3. PUT 用于更新资源，幂等\n 4. DELETE 用于删除资源，幂等",
+        "operationId": "Demo5",
+        "responses": {
+          "200": {
+            "description": "Empty 返回空的内容",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "204": {
+            "description": "no content",
+            "schema": {}
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUID 资源编号",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ping.name",
+            "description": "Name 该字段的备注，这里把它设置为必填属性.",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ping.value",
+            "description": "Value 该字段的备注，这里设置它默认值为3.14.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "float",
+            "default": "3.14"
+          }
+        ],
+        "tags": [
+          "demo"
+        ]
+      },
+      "put": {
+        "summary": "示例RESTful/RPC接口",
+        "description": "这里做一些较长的使用描述\n 1. POST 用于创建资源，非幂等\n 2. GET 用于获取资源，幂等\n 3. PUT 用于更新资源，幂等\n 4. DELETE 用于删除资源，幂等",
+        "operationId": "Demo4",
+        "responses": {
+          "200": {
+            "description": "Ping 返回更新的资源",
+            "schema": {
+              "$ref": "#/definitions/v1ExampleResponse"
+            }
+          },
+          "204": {
+            "description": "no content",
+            "schema": {}
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUID 资源编号",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Ping 资源内容",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ExampleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "demo"
+        ]
+      }
+    },
+    "/healthz": {
+      "get": {
+        "summary": "健康检测",
+        "description": "请务删除！\n 接口格式：/healthz?service=apilogin.v1alpha1.test\n 请求成功访问状态码200，且内容为：{\"status\": \"SERVING\"}",
+        "operationId": "HealthCheck",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1HealthCheckResponse"
+            }
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "service",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "internal"
+        ]
+      }
+    },
+    "/jwtauth": {
+      "get": {
+        "summary": "HTTP JWT AUTH",
+        "description": "curl -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZXN0LW9hdXRoMiIsImV4cCI6NzI1ODA4OTYwMCwiaWF0IjoxNTg1NjcwNDAwLCJpc3MiOiJodHRwOi8vYWNjb3VudC5leGFtcGxlLmNvbS9vYXV0aDIiLCJzdWIiOiIxMDAwMDAwMDAiLCJlbWFpbCI6ImRlbW9AZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmVkZXJhdGVkX2NsYWltcyI6eyJjb25uZWN0b3JfaWQiOiJ0ZXN0IiwidXNlcl9pZCI6ImRlbW8ifX0.wFIYAIIhFXUJdVTM5W4jAXcLBTdU6vmhdwGjD-bET5Q' http://127.0.0.1:10080/jwtauth",
+        "operationId": "JWTAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1JWTAuthResponse"
+            }
+          },
+          "500": {
+            "description": "{\"code\": 500, \"error\": \"internal error\", \"message\": \"internal error\", \"details\": []}",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "demo"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "DemoResponsePong": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID 资源编号"
+        },
+        "pong": {
+          "$ref": "#/definitions/v1ExampleResponse",
+          "title": "Pong 单个资源响应内容"
+        }
+      }
+    },
+    "HealthCheckResponseServingStatus": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "SERVING",
+        "NOT_SERVING",
+        "SERVICE_UNKNOWN"
+      ],
+      "default": "UNKNOWN"
+    },
+    "v1ExampleRequest": {
+      "type": "object",
+      "example": {
+        "name": "hello grpc-kit"
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name 该字段的备注，这里把它设置为必填属性",
+          "maxLength": 200,
+          "minLength": 1,
+          "required": [
+            "name"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "format": "float",
+          "default": "3.14",
+          "title": "Value 该字段的备注，这里设置它默认值为3.14"
+        }
+      },
+      "description": "Example的请求结构",
+      "required": [
+        "name"
+      ]
+    },
+    "v1ExampleResponse": {
+      "type": "object",
+      "example": {
+        "name": "grpc-kit"
+      },
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "description": "Example的响应结构"
+    },
+    "v1HealthCheckResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/HealthCheckResponseServingStatus"
+        }
+      }
+    },
+    "v1alpha1BaseAuthResponse": {
+      "type": "object",
+      "properties": {
+        "login_time": {
+          "type": "string"
+        }
+      }
+    },
+    "v1alpha1DemoRequest": {
+      "type": "object",
+      "example": {
+        "ping": {
+          "name": "grpc-kit"
+        }
+      },
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID 资源编号"
+        },
+        "ping": {
+          "$ref": "#/definitions/v1ExampleRequest",
+          "title": "Ping 资源内容"
+        }
+      },
+      "description": "Demo方法请求可使用的接口参数"
+    },
+    "v1alpha1DemoResponse": {
+      "type": "object",
+      "example": {
+        "uuid": "99feafb5-bed6-4daf-927a-69a2ab80c485",
+        "pong": {
+          "name": "grpc-kit"
+        }
+      },
+      "properties": {
+        "pong": {
+          "$ref": "#/definitions/DemoResponsePong",
+          "title": "Pong 放回创建的资源"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ExampleResponse"
+          },
+          "title": "Content 多个资源响应内容（无分页属性）"
+        },
+        "ping": {
+          "$ref": "#/definitions/v1ExampleResponse",
+          "title": "Ping 返回更新的资源"
+        },
+        "empty": {
+          "properties": {},
+          "title": "Empty 返回空的内容"
+        }
+      },
+      "description": "Demo方法响应的具体内容"
+    },
+    "v1alpha1JWTAuthResponse": {
+      "type": "object",
+      "properties": {
+        "login_time": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "BasicAuth": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ]
+}
