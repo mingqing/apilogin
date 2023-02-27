@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package test.apilogin.v1alpha1;
+package mingqing.apilogin.v1;
 
 // 引入依赖的外部proto文件
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
@@ -9,8 +9,7 @@ import "github.com/googleapis/googleapis/google/api/annotations.proto";
 import "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options/annotations.proto";
 
 // 同组RPC方法对应一个proto文件，以该组RPC名称的小写字母为文件名
-import "demo.proto";
-import "login.proto";
+import "api/mingqing/apilogin/v1/demo.proto";
 
 // 结合本项目，推荐做以下设置
 option (gogoproto.marshaler_all) = true;
@@ -23,16 +22,13 @@ option (gogoproto.goproto_unkeyed_all) = false;
 option (gogoproto.goproto_sizecache_all) = false;
 option (gogoproto.equal_all) = true;
 option (gogoproto.compare_all) = true;
-option (gogoproto.testgen_all) = true;
-option (gogoproto.benchgen_all) = true;
-option (gogoproto.populate_all) = true;
 option (gogoproto.messagename_all) = false;
 
 // 转换为swagger接口文档的相关设置
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
-    host: "apilogin.v1alpha1.test.api.grpc-kit.com",
+    host: "apilogin.v1.mingqing.api.grpc-kit.com",
     info: {
-        title: "apilogin.v1alpha1.test",
+        title: "apilogin.v1.mingqing",
         contact: {
             name: "gRPC Kit",
             url: "https://grpc-kit.com"
@@ -40,7 +36,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
         license:{
             name: "Apache License 2.0"
         }
-        version: "v0.0.0",
+        version: "0.1.0",
     },
     security_definitions: {
         security: {
@@ -65,7 +61,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 };
 
 // 该微服务支持的RPC方法定义
-service TestApilogin {
+service MingqingApilogin {
     rpc HealthCheck(grpc.health.v1.HealthCheckRequest) returns (grpc.health.v1.HealthCheckResponse) {
         option (google.api.http) = {
             get: "/healthz"
@@ -73,56 +69,30 @@ service TestApilogin {
         option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
             tags: "internal"
             summary: "健康检测"
-            description: '请务删除！\n 接口格式：/healthz?service=apilogin.v1alpha1.test\n 请求成功访问状态码200，且内容为：{"status": "SERVING"}'
-        };
-    };
-
-    rpc BaseAuth(BaseAuthRequest) returns (BaseAuthResponse) {
-        option (google.api.http) = {
-            get: "/baseauth"
-        };
-
-        option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
-            tags: "demo",
-            summary: "HTTP Base AUTH",
-            description: "curl --user hello:world http://127.0.0.1:10080/baseauth",
-            deprecated: false,
-        };
-    };
-
-    rpc JWTAuth(JWTAuthRequest) returns (JWTAuthResponse) {
-        option (google.api.http) = {
-            get: "/jwtauth"
-        };
-
-        option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
-            tags: "demo",
-            summary: "HTTP JWT AUTH",
-            description: "curl -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZXN0LW9hdXRoMiIsImV4cCI6NzI1ODA4OTYwMCwiaWF0IjoxNTg1NjcwNDAwLCJpc3MiOiJodHRwOi8vYWNjb3VudC5leGFtcGxlLmNvbS9vYXV0aDIiLCJzdWIiOiIxMDAwMDAwMDAiLCJlbWFpbCI6ImRlbW9AZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmVkZXJhdGVkX2NsYWltcyI6eyJjb25uZWN0b3JfaWQiOiJ0ZXN0IiwidXNlcl9pZCI6ImRlbW8ifX0.wFIYAIIhFXUJdVTM5W4jAXcLBTdU6vmhdwGjD-bET5Q' http://127.0.0.1:10080/jwtauth",
-            deprecated: false,
+            description: '请务删除！\n 接口格式：/healthz?service=apilogin.v1.mingqing\n 请求成功访问状态码200，且内容为：{"status": "SERVING"}'
         };
     };
 
     rpc Demo(DemoRequest) returns (DemoResponse) {
         option (google.api.http) = {
-            post: "/demo"
+            post: "/api/demo"
             body: "*"
             response_body: "pong"
             additional_bindings {
-                get: "/demo"
+                get: "/api/demo"
                 response_body: "content"
             }
             additional_bindings {
-                get: "/demo/{uuid}"
+                get: "/api/demo/{uuid}"
                 response_body: "pong.pong"
             }
             additional_bindings {
-                put: "/demo/{uuid}"
+                put: "/api/demo/{uuid}"
                 body: "ping"
                 response_body: "ping"
             }
             additional_bindings {
-                delete: "/demo/{uuid}"
+                delete: "/api/demo/{uuid}"
                 response_body: "empty"
             }
         };

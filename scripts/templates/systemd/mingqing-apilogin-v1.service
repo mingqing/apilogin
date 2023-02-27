@@ -1,0 +1,19 @@
+[Unit]
+After=network-online.target
+Documentation=http://(app.yaml:services.http_address)/openapi-spec/
+Description=The apilogin.v1.mingqing microservice. For more API detailed, please refer to the docs
+
+[Service]
+Type=simple
+User=nobody
+Restart=always
+RestartSec=15s
+TimeoutSec=60s
+LimitNOFILE=65535
+KillMode=control-group
+MemoryLimit=2048M
+ExecStart=/usr/local/mingqing/apilogin/v1/service --config /usr/local/mingqing/apilogin/v1/config/app.yaml
+
+[Install]
+Alias=mingqing-apilogin-v1.service
+WantedBy=multi-user.target

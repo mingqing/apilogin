@@ -1,13 +1,13 @@
 # Changelog
 
-名称 | 说明
-------------|----------
-Added       | 添加新功能
-Changed     | 功能的变更
-Deprecated  | 未来会删除
-Removed     | 之前为Deprecated状态，此版本被移除
-Fixed       | 功能的修复
-Security    | 有关安全问题的修复
+| 名称        | 说明                           |
+|------------|--------------------------------|
+| Added      | 添加新功能                       |
+| Changed    | 功能的变更                       |
+| Deprecated | 未来会删除                       |
+| Removed    | 之前为Deprecated状态，此版本被移除 |
+| Fixed      | 功能的修复                       |
+| Security   | 有关安全问题的修复                |
 
 ## [Unreleased]
 
