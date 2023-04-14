@@ -4,11 +4,11 @@ import (
 	"context"
 	"testing"
 
-	hz "google.golang.org/grpc/health/grpc_health_v1"
+	statusv1 "github.com/grpc-kit/pkg/api/known/status/v1"
 )
 
 func TestInternal(t *testing.T) {
-	req := &hz.HealthCheckRequest{
+	req := &statusv1.HealthCheckRequest{
 		Service: m.baseCfg.Services.ServiceCode,
 	}
 

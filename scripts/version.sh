@@ -11,7 +11,7 @@ if test -z $1; then
 fi
 
 function prefix() {
-  TEMP=$(grep "version: \".*\"" api/mingqing/apilogin/${API_VERSION}/microservice.proto)
+  TEMP=$(grep "version: \".*\"" api/${PRODUCT_CODE}/${SHORT_NAME}/${API_VERSION}/microservice.openapiv2.yaml)
   PREFIX_VERSION=$(echo -n $TEMP | awk -F"\"" '{ print $2 }')
   echo $PREFIX_VERSION
 }
@@ -28,15 +28,24 @@ function release() {
 }
 
 function update() {
-  GOHOSTS=$(go env GOHOSTOS)
+  GOHOSTOS=$(go env GOHOSTOS)
 
   PREFIX_VERSION=$(prefix)
   RELEASE_VERSION=$(release)
 
-  if test ${GOHOSTS} = "darwin"; then
-    sed -i "" "s#version: \"${PREFIX_VERSION}\"#version: \"${RELEASE_VERSION}\"#g" api/mingqing/apilogin/${API_VERSION}/microservice.proto
+  if test $PREFIX_VERSION == $RELEASE_VERSION; then
+    return
+  fi
+
+  if test ${GOHOSTOS} = "darwin"; then
+    sed -i "" "s#version: \"${PREFIX_VERSION}\"#version: \"${RELEASE_VERSION}\"#g" api/${PRODUCT_CODE}/${SHORT_NAME}/${API_VERSION}/microservice.openapiv2.yaml
   else
-    sed -i "s#version: \"${PREFIX_VERSION}\"#version: \"${RELEASE_VERSION}\"#g" api/mingqing/apilogin/${API_VERSION}/microservice.proto
+    # fix run in container
+    # sed: couldn't open temporary file sed1DDoX9: Permission denied
+    #sed -i "s#version: \"${PREFIX_VERSION}\"#version: \"${RELEASE_VERSION}\"#g" api/${PRODUCT_CODE}/${SHORT_NAME}/${API_VERSION}/microservice.openapiv2.yaml
+    cp api/${PRODUCT_CODE}/${SHORT_NAME}/${API_VERSION}/microservice.openapiv2.yaml /tmp/microservice.openapiv2.yaml
+    sed -i "s#version: \"${PREFIX_VERSION}\"#version: \"${RELEASE_VERSION}\"#g" /tmp/microservice.openapiv2.yaml
+    mv /tmp/microservice.openapiv2.yaml api/${PRODUCT_CODE}/${SHORT_NAME}/${API_VERSION}/microservice.openapiv2.yaml > /dev/null 2>&1
   fi
 }
 
