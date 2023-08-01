@@ -16,5 +16,5 @@ jobs:
           sudo curl -L --remote-name-all https://dl.k8s.io/release/${RELEASE}/bin/linux/${ARCH}/kubeadm
           sudo chmod +x kubeadm
           IMGS=$(./kubeadm config images list)
-          for i in ${IMGS}; do echo $i; done
+          for i in ${IMGS}; do docker pull $i; done
       - run: sudo ./kubeadm config images list
