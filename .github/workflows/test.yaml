@@ -11,11 +11,11 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: |
-          sudo apt-get update -y
-          sudo apt-get install -y apt-transport-https ca-certificates curl
-          sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-          echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-          sudo apt-get update
-          sudo apt-get install -y kubeadm
-          sudo apt-mark hold kubeadm
+          RELEASE="v1.26.7"
+          ARCH="amd64"
+          sudo curl -L --remote-name-all https://dl.k8s.io/release/${RELEASE}/bin/linux/${ARCH}/kubeadm
+          sudo chmod +x kubeadm
+          sudo ./kubeadm config images list
+          sudo pwd
+          sudo ls
       - run: sudo kubeadm config images list
