@@ -10,5 +10,5 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - run: apt-get install -y kubeadm
-      - run: kubeadm config images list
+      - run: sudo apt-get install -y kubeadm
+      - run: sudo kubeadm config images list
