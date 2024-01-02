@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: biz-dev-uptime
+
+commonLabels:
+  api.opsaid.net/appname: mingqing-apilogin-v1
+  api.opsaid.net/pm2-uuid: f9714d3d-3829-4567-ab33-dc304860de8f
+
+commonAnnotations:
+  api.opsaid.net/pm2-uuid: f9714d3d-3829-4567-ab33-dc304860de8f
+
+configMapGenerator:
+- name: mingqing-apilogin-v1
+  files:
+  - app.yaml=config/configmap/app.yaml
+  options:
+    disableNameSuffixHash: true
+
+replicas:
+- name: mingqing-apilogin-v1
+  count: 1
+
+resources:
+- service/ingresses.yaml
+- service/services.yaml
+- workloads/deployments/mingqing-apilogin-v1.yaml
+
+images:
+- name: registry.cn-hangzhou.aliyuncs.com/opsaid/mingqing-apilogin-v1
+  newTag: 0.1.0

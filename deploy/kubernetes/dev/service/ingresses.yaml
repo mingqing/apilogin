@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  #annotations:
+  #  nginx.ingress.kubernetes.io/proxy-body-size: 10m
+  name: mingqing-apilogin-v1
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: mingqing-apilogin-v1.biz-dev-uptime.fake.dev.173ops.com
+    http:
+      paths:
+      - path: /
+        backend:
+          service:
+            name: mingqing-apilogin-v1
+            port:
+              number: 10080
+        pathType: Prefix

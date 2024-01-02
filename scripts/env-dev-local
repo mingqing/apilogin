@@ -9,25 +9,25 @@
 #CI_BIZ_GROUP_APPID=uptime
 
 # 镜像名称：用于构建生成的镜像名称
-#CI_REGISTRY_IMAGE=docker.io/opsaid/test9
+CI_REGISTRY_IMAGE=registry.cn-hangzhou.aliyuncs.com/opsaid/mingqing-apilogin-v1
 
 # 基础镜像：构建业务镜像依赖的基础环境
 #DOCKER_IMAGE_FROM=scratch
 
 # 镜像版本：用于构建生成的镜像版本
-DOCKER_IMAGE_VERSION=latest
+#DOCKER_IMAGE_VERSION=latest
 
 # K8S 标签前缀
-#KUBERNETES_LABEL_PREFIX=
+KUBERNETES_LABEL_PREFIX=api.opsaid.net
 
 # 部署在 K8S 命名空间
-#KUBERNETES_NAMESPACE=
+KUBERNETES_NAMESPACE=biz-dev-uptime
 
 # K8S 资源关联计费项目ID
-#KUBERNETES_PM2_UUID=
+KUBERNETES_PM2_UUID=f9714d3d-3829-4567-ab33-dc304860de8f
 
 # 生成 K8S YAML 模版地址
 #KUBERNETES_YAML_DIRECTORY=
 
 # 生成 K8S ingress 默认域名后缀
-#KUBERNETES_CLUSTER_DOMAIN=
+KUBERNETES_CLUSTER_DOMAIN=fake.dev.173ops.com
