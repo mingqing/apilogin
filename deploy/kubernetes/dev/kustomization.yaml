@@ -28,4 +28,4 @@ resources:
 
 images:
 - name: registry.cn-hangzhou.aliyuncs.com/opsaid/mingqing-apilogin-v1
-  newTag: 0.1.0
+  newTag: 0.1.1
