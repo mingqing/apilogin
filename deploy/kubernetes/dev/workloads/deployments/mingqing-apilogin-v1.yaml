@@ -12,13 +12,13 @@ spec:
     type: RollingUpdate
   template:
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                api.opsaid.net/appname: mingqing-apilogin-v1
-            topologyKey: kubernetes.io/hostname
+      #affinity:
+      #  podAntiAffinity:
+      #    requiredDuringSchedulingIgnoredDuringExecution:
+      #    - labelSelector:
+      #        matchLabels:
+      #          api.opsaid.net/appname: mingqing-apilogin-v1
+      #      topologyKey: kubernetes.io/hostname
       containers:
       - args:
         - /opt/service
