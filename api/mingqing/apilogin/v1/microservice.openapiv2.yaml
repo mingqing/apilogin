@@ -13,7 +13,7 @@ openapiOptions:
           license:
             name: "Apache License 2.0"
             url: "https://github.com/grpc-kit/cli/blob/main/LICENSE"
-          version: "0.1.0"
+          version: "0.1.1"
         host: "apilogin.v1.mingqing.api.grpc-kit.com"
         base_path: "/"
         schemes:

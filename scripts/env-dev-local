@@ -12,7 +12,7 @@
 CI_REGISTRY_IMAGE=registry.cn-hangzhou.aliyuncs.com/opsaid/mingqing-apilogin-v1
 
 # 基础镜像：构建业务镜像依赖的基础环境
-#DOCKER_IMAGE_FROM=scratch
+DOCKER_IMAGE_FROM=registry.cn-hangzhou.aliyuncs.com/opsaid/minideb:stretch
 
 # 镜像版本：用于构建生成的镜像版本
 #DOCKER_IMAGE_VERSION=latest

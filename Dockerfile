@@ -1,4 +1,4 @@
-FROM scratch
+FROM registry.cn-hangzhou.aliyuncs.com/opsaid/minideb:stretch
 
 WORKDIR /opt
 
