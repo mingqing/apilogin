@@ -2,10 +2,9 @@
 
 ## Description
 
-一个仅用于测试的项目
+// TODO(user): Add simple overview of use/purpose
 
 ## Getting Started
 
-```shell
-make run
-```
+// TODO(user): Add quick start
+

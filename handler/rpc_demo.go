@@ -3,19 +3,18 @@ package handler
 import (
 	"context"
 
-	"github.com/gogo/protobuf/types"
-	"github.com/grpc-kit/pkg/api"
+	examplev1 "github.com/grpc-kit/pkg/api/known/example/v1"
 
 	pb "github.com/mingqing/apilogin/api/mingqing/apilogin/v1"
 )
 
 // Demo test
-func (m Microservice) Demo(ctx context.Context, req *pb.DemoRequest) (*pb.DemoResponse, error) {
+func (m *Microservice) Demo(ctx context.Context, req *pb.DemoRequest) (*pb.DemoResponse, error) {
 	m.logger.Warnf("test demo warn: %v", "func Demo")
 
 	result := &pb.DemoResponse{
 		// GET /api/demo
-		Content: []*api.ExampleResponse{
+		Content: []*examplev1.ExampleResponse{
 			{Name: "grpc-kit-cli"},
 			{Name: "grpc-kit-cfg"},
 			{Name: "grpc-kit-pkg"},
@@ -23,15 +22,15 @@ func (m Microservice) Demo(ctx context.Context, req *pb.DemoRequest) (*pb.DemoRe
 			{Name: "grpc-kit-web"},
 			{Name: "grpc-kit-doc"},
 		},
-		Ping: &api.ExampleResponse{},
+		Ping: &examplev1.ExampleResponse{},
 		// POST /api/demo
 		// GET /api/demo/{uuid}
 		Pong: &pb.DemoResponse_Pong{
 			Uuid: "99feafb5-bed6-4daf-927a-69a2ab80c485",
-			Pong: &api.ExampleResponse{},
+			Pong: &examplev1.ExampleResponse{},
 		},
 		// DELETE /api/demo/{uuid}
-		Empty: &types.Empty{},
+		// Empty: &types.Empty{},
 	}
 
 	if req.Ping != nil {

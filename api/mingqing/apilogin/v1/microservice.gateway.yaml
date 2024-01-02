@@ -1,0 +1,21 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+  - selector: default.api.mingqing.apilogin.v1.MingqingApilogin.HealthCheck
+    get: "/api/healthz"
+
+  - selector: default.api.mingqing.apilogin.v1.MingqingApilogin.Demo
+    post: "/api/demo"
+    body: "*"
+    response_body: "pong"
+    additional_bindings:
+      - get: "/api/demo"
+      - get: "/api/demo/{uuid}"
+        response_body: "pong.pong"
+      - put: "/api/demo/{uuid}"
+        body: "ping"
+        response_body: "ping"
+      - delete: "/api/demo/{uuid}"
+        response_body: "empty"

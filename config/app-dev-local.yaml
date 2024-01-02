@@ -28,6 +28,7 @@ security:
   authentication:
     insecure_rpcs:
       - Check
+      - Watch
       - HealthCheck
     http_users:
       - username: user1
@@ -38,6 +39,13 @@ debugger:
   enable_pprof: true
   log_level: debug
   log_format: text
+
+# 可观测性配置
+#observables:
+#  enable: true
+#  exporters:
+#    otlp:
+#      endpoint: http://127.0.0.1:4317
 
 # 应用私有配置
 independent:

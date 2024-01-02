@@ -27,17 +27,6 @@ BUILD_LD_FLAGS  := "-X 'github.com/grpc-kit/pkg/vars.Appname=mingqing-apilogin-v
                 -X 'github.com/grpc-kit/pkg/vars.CommitUnixTime=${COMMIT_DATE}' \
                 -X 'github.com/grpc-kit/pkg/vars.ReleaseVersion=${RELEASE_VERSION}'"
 
-# 构建Docker容器变量
-BUILD_GOOS      ?= $(shell ${GO} env GOOS)
-IMAGE_FROM      ?= scratch
-IMAGE_HOST      ?= hub.docker.com
-IMAGE_NAME      ?= ${IMAGE_HOST}/${NAMESPACE}/${SHORTNAME}
-IMAGE_VERSION   ?= ${RELEASE_VERSION}
-
-# 部署与运行相关变量
-BUILD_ENV       ?= local
-DEPLOY_ENV      ?= dev
-
 ##@ General
 
 .PHONY: help
@@ -54,28 +43,25 @@ precheck: ## Check environment.
 ##@ Development
 
 .PHONY: generate
-manifests: ## Generate deployment manifests files.
-	@NAMESPACE=${NAMESPACE} \
-		IMAGE_NAME=${IMAGE_NAME} \
-		IMAGE_VERSION=${IMAGE_VERSION} \
-		BUILD_ENV=${BUILD_ENV} ./scripts/manifests.sh ${DEPLOY_ENV}
+manifests: ## Generate deployment manifests files, like: "make manifests TEMPLATES=kubernetes".
+	@./scripts/manifests.sh
 
 generate: precheck ## Generate code from proto files.
 	@echo ">> generation release version"
 	@./scripts/version.sh update
-
 	@echo ">> generation code from proto files"
 	@./scripts/genproto.sh
 
 .PHONY: lint
-lint: ## Run go fmt and vet against code.
+lint: generate ## Run go fmt and vet against code.
+	@${GO} mod tidy
 	@${GO} fmt ./...
 	@${GO} vet ./...
 
 .PHONY: test
 test: generate ## Run unit tests.
 	@${GO} mod tidy
-	@${GO} test ./...
+	@${GO} test ./... -timeout 3m -v -gcflags=-l -cover=true
 
 ##@ Build
 
@@ -84,7 +70,7 @@ build: clean generate ## Build binary files according to the target system arch.
 	@mkdir build
 	@mkdir build/deploy
 	@${GO} mod tidy
-	@GOOS=${BUILD_GOOS} ${GOBUILD} -ldflags ${BUILD_LD_FLAGS} -o build/service cmd/server/main.go
+	@GOOS=${GOOS} GOARCH=${GOARCH} ${GOBUILD} -ldflags ${BUILD_LD_FLAGS} -o build/service cmd/server/main.go
 
 .PHONY: run
 run: generate ## Run a application from your host.
@@ -98,19 +84,39 @@ docker-run: ## Run a application from your docker.
 .PHONY: docker-build
 docker-build: build manifests ## Build docker image with the application.
 	@echo ">> docker build"
-	@IMAGE_FROM=${IMAGE_FROM} \
-		IMAGE_HOST=${IMAGE_HOST} \
-		NAMESPACE=${NAMESPACE} \
-		SHORTNAME=${SHORTNAME} \
-		IMAGE_VERSION=${IMAGE_VERSION} ./scripts/docker.sh build
+	@./scripts/docker.sh build
 
 .PHONY: docker-push
 docker-push: ## Push docker image with the application.
 	@echo ">> docker push"
-	@IMAGE_HOST=${IMAGE_HOST} \
-		NAMESPACE=${NAMESPACE} \
-		SHORTNAME=${SHORTNAME} \
-		IMAGE_VERSION=${IMAGE_VERSION} ./scripts/docker.sh push
+	@./scripts/docker.sh push
+
+##@ Build Dependencies
+
+.PHONY: protoc
+protoc: ## Download protoc locally if necessary.
+	@echo ">> download binary protoc"
+	@./scripts/binaries.sh protoc
+
+.PHONY: protoc-gen-go
+protoc-gen-go: ## Download protoc-gen-go locally if necessary.
+	@echo ">> download binary protoc-gen-go"
+	@./scripts/binaries.sh protoc-gen-go
+
+.PHONY: protoc-gen-go-grpc
+protoc-gen-go-grpc: ## Download protoc-gen-go-grpc locally if necessary.
+	@echo ">> download binary protoc-gen-go-grpc"
+	@./scripts/binaries.sh protoc-gen-go-grpc
+
+.PHONY: protoc-gen-grpc-gateway
+protoc-gen-grpc-gateway: ## Download protoc-gen-grpc-gateway locally if necessary.
+	@echo ">> download binary protoc-gen-grpc-gateway"
+	@./scripts/binaries.sh protoc-gen-grpc-gateway
+
+.PHONY: protoc-gen-openapiv2
+protoc-gen-openapiv2: ## Download protoc-gen-openapiv2 locally if necessary.
+	@echo ">> download binary protoc-gen-openapiv2"
+	@./scripts/binaries.sh protoc-gen-openapiv2
 
 ##@ Clean
 

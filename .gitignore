@@ -16,9 +16,16 @@ vendor/
 
 # Config file and certificate
 config/*.pem
-config/app-dev-*.toml
-config/app-test-*.toml
-config/app-prod-*.toml
+config/*.crt
+config/*.key
+config/app-dev-*
+config/app-test-*
+config/app-prod-*
+
+# Frontend web ui
+web/admin/node_modules
+web/webroot/node_modules
+public/openapi/microservice.swagger.json
 
 # Others
 .swp
@@ -26,7 +33,3 @@ config/app-prod-*.toml
 .idea/
 build/
 backup/
-scripts/env-dev-*.sh
-scripts/env-test-*.sh
-scripts/env-prod-*.sh
-api/assets_vfsdata.go

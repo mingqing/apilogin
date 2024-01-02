@@ -1,4 +1,4 @@
-FROM _DOCKER_IMAGE_FROM_
+FROM scratch
 
 WORKDIR /opt
 

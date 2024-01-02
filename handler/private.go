@@ -30,8 +30,12 @@ func (m *Microservice) privateStreamServerInterceptor() []grpc.StreamServerInter
 	return nil
 }
 
-func (m *Microservice) privateHTTPHandle(mux *http.ServeMux) {
+func (m *Microservice) privateHTTPHandle(mux *http.ServeMux) error {
+	// 这里属于自定义 http 接口，访问 /favicon.ico 不会产生链路数据
+	// 如需捕获链路数据，参考文档：https://grpc-kit.com/docs/spec-cfg/observables/
 	mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
 		_, _ = fmt.Fprintf(w, "")
 	})
+
+	return nil
 }

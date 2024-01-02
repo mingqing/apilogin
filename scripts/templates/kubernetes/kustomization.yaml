@@ -1,31 +1,31 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: biz-DEPLOY_ENV-NAMESPACE
+namespace: _KUBERNETES_NAMESPACE_
 
 commonLabels:
-  api.grpc-kit.com/appname: mingqing-apilogin-v1
-  api.grpc-kit.com/pm2-uuid: 3264e3fe-2bce-4835-8588-99651a8ddd3b
+  _KUBERNETES_LABEL_PREFIX_/appname: _APPNAME_
+  _KUBERNETES_LABEL_PREFIX_/pm2-uuid: _KUBERNETES_PM2_UUID_
 
 commonAnnotations:
-  api.grpc-kit.com/pm2-uuid: 3264e3fe-2bce-4835-8588-99651a8ddd3b
+  _KUBERNETES_LABEL_PREFIX_/pm2-uuid: _KUBERNETES_PM2_UUID_
 
 configMapGenerator:
-- name: mingqing-apilogin-v1
+- name: _APPNAME_
   files:
   - app.yaml=config/configmap/app.yaml
   options:
     disableNameSuffixHash: true
 
 replicas:
-- name: mingqing-apilogin-v1
+- name: _APPNAME_
   count: 1
 
 resources:
 - service/ingresses.yaml
 - service/services.yaml
-- workloads/deployment.yaml
+- workloads/deployments/_APPNAME_.yaml
 
 images:
-- name: IMAGE_NAME
-  newTag: IMAGE_VERSION
+- name: _CI_REGISTRY_IMAGE_
+  newTag: _DOCKER_IMAGE_VERSION_

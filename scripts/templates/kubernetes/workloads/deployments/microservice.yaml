@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mingqing-apilogin-v1
+  name: _APPNAME_
 spec:
   revisionHistoryLimit: 3
   strategy:
@@ -17,7 +17,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                api.grpc-kit.com/appname: mingqing-apilogin-v1
+                _KUBERNETES_LABEL_PREFIX_/appname: _APPNAME_
             topologyKey: kubernetes.io/hostname
       containers:
       - args:
@@ -30,7 +30,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.podIP
-        image: IMAGE_NAME:latest
+        image: _CI_REGISTRY_IMAGE_:latest
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
@@ -40,11 +40,11 @@ spec:
           tcpSocket:
             port: 10081
           timeoutSeconds: 5
-        name: mingqing-apilogin-v1
+        name: _APPNAME_
         readinessProbe:
           failureThreshold: 3
           httpGet:
-            path: /healthz?service=apilogin.v1.mingqing
+            path: /api/healthz?service=_SERVICE_CODE_
             port: 10080
             scheme: HTTP
           initialDelaySeconds: 15
@@ -85,6 +85,6 @@ spec:
       - name: config-volume
         configMap:
           defaultMode: 420
-          name: mingqing-apilogin-v1
+          name: _APPNAME_
       - name: applog-volume
         emptyDir: {}
