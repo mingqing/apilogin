@@ -30,6 +30,8 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.podIP
+        - name: USER
+          value: nobody
         image: registry.cn-hangzhou.aliyuncs.com/opsaid/mingqing-apilogin-v1:latest
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -44,7 +46,7 @@ spec:
         readinessProbe:
           failureThreshold: 3
           httpGet:
-            path: /api/healthz?service=_SERVICE_CODE_
+            path: /ping
             port: 10080
             scheme: HTTP
           initialDelaySeconds: 15
