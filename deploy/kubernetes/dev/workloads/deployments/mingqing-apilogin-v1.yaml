@@ -25,6 +25,8 @@ spec:
         - --config
         - /opt/config/app.yaml
         env:
+        - name: USER
+          value: nobody
         - name: GRPC_KIT_PUHLIC_IP
           valueFrom:
             fieldRef:
